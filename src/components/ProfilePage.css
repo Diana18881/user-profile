@@ -1,0 +1,138 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+  }
+  
+  .profile-page {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+  }
+  
+  /* Sidebar (Projects and Tasks) */
+  .sidebar {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    border-right: 1px solid #ddd;
+  }
+  
+  .sidebar h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+  
+  .create-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .create-item span {
+    font-size: 14px;
+  }
+  
+  .create-item button {
+    background-color: #ddd;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  /* Profile Form Container */
+  .profile-form-container {
+    flex: 2;
+    padding: 20px;
+    background: linear-gradient(to top, #dfefff, #ffffff);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Avatar Upload */
+  .avatar-upload {
+    margin-bottom: 20px;
+  }
+  
+  .avatar-placeholder {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  /* Profile Form */
+  .profile-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .profile-form input,
+  .profile-form textarea {
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .profile-form textarea {
+    resize: none;
+    height: 80px;
+  }
+  
+  .visibility-options {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .visibility-options label {
+    display: flex;
+    align-items: center;
+  }
+  
+  .visibility-options input {
+    margin-right: 5px;
+  }
+  
+  /* Additions Section */
+  .additions {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .additions div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .additions button {
+    background-color: #ddd;
+    border: none;
+    border-radius: 50%;
+    font-size: 18px;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    cursor: pointer;
+  }

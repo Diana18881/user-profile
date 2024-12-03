@@ -1,0 +1,110 @@
+.app-container {
+  display: flex;
+  justify-content:  flex-start; /* Разделение пространства */
+  align-items: flex-start;
+  padding: 20px;
+}
+
+/* Левая секция (если есть дополнительные элементы) */
+.sidebar {
+  width: 30%; /* Левая часть займет 60% ширины */
+  margin-right: 500px;
+}
+
+/* Правая секция с формой */
+.profile-section {
+  width: 100%; /* Правая часть с формой займет 35% ширины */
+}
+.user-profile-form {
+  background: linear-gradient(to bottom, #e0f7ff, #ffffff);
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+  font-family: 'Arial', sans-serif;
+}
+
+.avatar-upload {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.avatar-label {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.avatar-placeholder {
+  width: 80px;
+  height: 80px;
+  border: 2px dashed #ccc;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.avatar-icon {
+  font-size: 24px;
+  color: #888;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+textarea {
+  resize: none;
+}
+
+.visibility-group,
+.link-group {
+  font-size: 14px;
+}
+
+.visibility-group label {
+  margin-right: 10px;
+}
+
+.add-button {
+  background: none;
+  border: none;
+  color: #007bff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.add-button:hover {
+  text-decoration: underline;
+}
+
+.save-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.save-button:hover {
+  background-color: #0056b3;
+}
