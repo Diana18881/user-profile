@@ -1,3 +1,4 @@
+
 // import React, { useState, useEffect } from 'react';
 // import UserProfileForm from './components/UserProfileForm';
 // import ProfileDisplay from './components/ProfileDisplay';
@@ -57,6 +58,7 @@
 //   // Сброс данных профиля
 //   const handleResetProfile = () => {
 //     setProfileData(null);
+//     localStorage.removeItem('userProfile'); // Удаляем профиль из localStorage
 //   };
 
 //   return (
@@ -127,17 +129,17 @@
 // };
 
 // export default App;
+
 import React, { useState, useEffect } from 'react';
 import UserProfileForm from './components/UserProfileForm';
 import ProfileDisplay from './components/ProfileDisplay';
 import './App.css';
 
 const App = () => {
-  // Состояния для профиля, проектов, задач и режима редактирования
   const [profileData, setProfileData] = useState(null);
   const [projects, setProjects] = useState([]);
   const [tasks, setTasks] = useState([]);
-  const [isEditing, setIsEditing] = useState(false); // Режим редактирования
+  const [isEditing, setIsEditing] = useState(false);
 
   // Загружаем данные из localStorage при монтировании
   useEffect(() => {
@@ -152,7 +154,7 @@ const App = () => {
     setTasks(savedTasks);
   }, []);
 
-  // Сохранение данных проектов и задач в localStorage при их изменении
+  // Сохраняем проекты и задачи в localStorage
   useEffect(() => {
     localStorage.setItem('projects', JSON.stringify(projects));
   }, [projects]);
@@ -161,7 +163,7 @@ const App = () => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
-  // Функции для добавления проектов и задач
+  // Добавление проектов и задач
   const handleAddProject = () => {
     const projectName = prompt('Enter project name:');
     if (projectName) {
@@ -176,36 +178,49 @@ const App = () => {
     }
   };
 
-  // Функция для обновления профиля
-  const handleUpdateProfile = (newData) => {
-    setProfileData(newData);
-    localStorage.setItem('userProfile', JSON.stringify(newData)); // Сохранение в localStorage
-    setIsEditing(false); // Выключаем режим редактирования
+  // Удаление проектов и задач
+  const handleDeleteProject = (index) => {
+    setProjects((prev) => prev.filter((_, i) => i !== index));
   };
 
-  // Сброс данных профиля
+  const handleDeleteTask = (index) => {
+    setTasks((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  // Обновление профиля
+  const handleUpdateProfile = (newData) => {
+    setProfileData(newData);
+    localStorage.setItem('userProfile', JSON.stringify(newData));
+    setIsEditing(false);
+  };
+
+  // Сброс профиля
   const handleResetProfile = () => {
     setProfileData(null);
-    localStorage.removeItem('userProfile'); // Удаляем профиль из localStorage
+    localStorage.removeItem('userProfile');
   };
 
   return (
     <div className="app-container">
-      {/* Верхний заголовок */}
       <header className="header">
         <h1 className="header-logo">TROOD.</h1>
         <span className="header-title">Profile</span>
       </header>
 
-      {/* Основная структура страницы */}
       <div className="content">
-        {/* Секция для проектов и задач */}
         <div className="sidebar">
           <h2>Projects:</h2>
           <div className="card-list">
             {projects.map((project, index) => (
               <div className="card" key={index}>
                 {project}
+                <button
+                  onClick={() => handleDeleteProject(index)}
+                  className="delete-button"
+                  title="Delete project"
+                >
+                  🗑️
+                </button>
               </div>
             ))}
             <div className="create-item" onClick={handleAddProject}>
@@ -218,6 +233,13 @@ const App = () => {
             {tasks.map((task, index) => (
               <div className="card" key={index}>
                 {task}
+                <button
+                  onClick={() => handleDeleteTask(index)}
+                  className="delete-button"
+                  title="Delete task"
+                >
+                  🗑️
+                </button>
               </div>
             ))}
             <div className="create-item" onClick={handleAddTask}>
@@ -226,16 +248,10 @@ const App = () => {
           </div>
         </div>
 
-        {/* Профильная секция */}
         <div className="profile-section">
           {isEditing ? (
-            // Если включен режим редактирования, отображаем форму
-            <UserProfileForm 
-              onUpdateProfile={handleUpdateProfile} 
-              profileData={profileData} 
-            />
+            <UserProfileForm onUpdateProfile={handleUpdateProfile} profileData={profileData} />
           ) : (
-            // Если выключен режим редактирования, отображаем данные профиля
             <>
               {profileData ? (
                 <ProfileDisplay profileData={profileData} />

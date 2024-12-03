@@ -1,13 +1,15 @@
+
 // import React, { useState, useEffect } from 'react';
 // import './UserProfileForm.css'; // Подключите CSS-файл
+// import { FaTrashAlt } from 'react-icons/fa'; // Иконка корзины (можно установить через npm install react-icons)
 
 // const UserProfileForm = ({ onUpdateProfile, profileData, onResetProfile }) => {
-//   // Инициализация данных профиля из localStorage или переданных пропсов
 //   const savedProfileData = JSON.parse(localStorage.getItem('userProfile')) || profileData;
 
 //   const [formData, setFormData] = useState(savedProfileData || { name: '', lastName: '', jobTitle: '', phone: '', address: '', visibility: 'private', avatar: '', interests: [], links: [] });
 //   const [originalData, setOriginalData] = useState(savedProfileData || { name: '', lastName: '', jobTitle: '', phone: '', address: '', visibility: 'private', avatar: '', interests: [], links: [] });
 //   const [errors, setErrors] = useState({});
+//   const [isSaved, setIsSaved] = useState(false); // Состояние, чтобы скрыть кнопки после сохранения
 
 //   // Обработчик изменения полей
 //   const handleChange = (e) => {
@@ -97,7 +99,16 @@
 //       localStorage.setItem('userProfile', JSON.stringify(formData));
 //       onUpdateProfile(formData);
 //       setOriginalData(formData); // Обновляем originalData после сохранения
+//       setIsSaved(true); // Скрыть кнопки после сохранения
 //     }
+//   };
+
+//   // Удаление профиля
+//   const handleDeleteProfile = () => {
+//     localStorage.removeItem('userProfile');
+//     onResetProfile(); // Очищаем профиль
+//     setFormData({ name: '', lastName: '', jobTitle: '', phone: '', address: '', visibility: 'private', avatar: '', interests: [], links: [] });
+//     setIsSaved(false); // Восстанавливаем состояние
 //   };
 
 //   // Отмена изменений
@@ -219,17 +230,23 @@
 //         <span>Your links:</span>
 //         <div className="links-container">
 //           {(formData.links || []).map((link, index) => (
-//             <div key={index} className="link-item">
-//               <span>{link.siteName}</span>: <a href={link.link} target="_blank" rel="noopener noreferrer">{link.link}</a>
+//             <div key={index}>
+//               <a href={link.link} target="_blank" rel="noopener noreferrer">{link.siteName}</a>
 //             </div>
 //           ))}
 //           <button className="add-button" onClick={handleAddLink}>+</button>
 //         </div>
 //       </div>
 
-//       <div className="form-actions">
-//         <button onClick={handleSave} className="save-button">Save</button>
-//         <button onClick={handleCancel} className="cancel-button">Cancel</button>
+//       <div className="actions">
+//         <button onClick={handleSave}>Save</button>
+//         <button onClick={handleCancel}>Cancel</button>
+//         {isSaved && (
+//           <div className="actions-after-save">
+//             <FaTrashAlt onClick={handleDeleteProfile} className="delete-icon" />
+//             <button onClick={() => window.location.reload()}>Return</button>
+//           </div>
+//         )}
 //       </div>
 //     </div>
 //   );
@@ -238,13 +255,33 @@
 // export default UserProfileForm;
 import React, { useState, useEffect } from 'react';
 import './UserProfileForm.css'; // Подключите CSS-файл
-import { FaTrashAlt } from 'react-icons/fa'; // Иконка корзины (можно установить через npm install react-icons)
+import { FaTrashAlt } from 'react-icons/fa'; // Иконка корзины (npm install react-icons)
 
 const UserProfileForm = ({ onUpdateProfile, profileData, onResetProfile }) => {
   const savedProfileData = JSON.parse(localStorage.getItem('userProfile')) || profileData;
 
-  const [formData, setFormData] = useState(savedProfileData || { name: '', lastName: '', jobTitle: '', phone: '', address: '', visibility: 'private', avatar: '', interests: [], links: [] });
-  const [originalData, setOriginalData] = useState(savedProfileData || { name: '', lastName: '', jobTitle: '', phone: '', address: '', visibility: 'private', avatar: '', interests: [], links: [] });
+  const [formData, setFormData] = useState(savedProfileData || { 
+    name: '', 
+    lastName: '', 
+    jobTitle: '', 
+    phone: '', 
+    address: '', 
+    visibility: 'private', 
+    avatar: '', 
+    interests: [], 
+    links: [] 
+  });
+  const [originalData, setOriginalData] = useState(savedProfileData || { 
+    name: '', 
+    lastName: '', 
+    jobTitle: '', 
+    phone: '', 
+    address: '', 
+    visibility: 'private', 
+    avatar: '', 
+    interests: [], 
+    links: [] 
+  });
   const [errors, setErrors] = useState({});
   const [isSaved, setIsSaved] = useState(false); // Состояние, чтобы скрыть кнопки после сохранения
 
@@ -342,10 +379,22 @@ const UserProfileForm = ({ onUpdateProfile, profileData, onResetProfile }) => {
 
   // Удаление профиля
   const handleDeleteProfile = () => {
-    localStorage.removeItem('userProfile');
-    onResetProfile(); // Очищаем профиль
-    setFormData({ name: '', lastName: '', jobTitle: '', phone: '', address: '', visibility: 'private', avatar: '', interests: [], links: [] });
-    setIsSaved(false); // Восстанавливаем состояние
+    if (window.confirm('Вы уверены, что хотите удалить профиль?')) {
+      localStorage.removeItem('userProfile');
+      onResetProfile(); // Очищаем профиль
+      setFormData({ 
+        name: '', 
+        lastName: '', 
+        jobTitle: '', 
+        phone: '', 
+        address: '', 
+        visibility: 'private', 
+        avatar: '', 
+        interests: [], 
+        links: [] 
+      });
+      setIsSaved(false); // Восстанавливаем состояние
+    }
   };
 
   // Отмена изменений
@@ -464,11 +513,11 @@ const UserProfileForm = ({ onUpdateProfile, profileData, onResetProfile }) => {
       </div>
 
       <div className="form-group">
-        <span>Your links:</span>
+        <span>Useful links:</span>
         <div className="links-container">
           {(formData.links || []).map((link, index) => (
-            <div key={index}>
-              <a href={link.link} target="_blank" rel="noopener noreferrer">{link.siteName}</a>
+            <div key={index} className="link-item">
+              <span>{link.siteName}:</span> <a href={link.link} target="_blank" rel="noopener noreferrer">{link.link}</a>
             </div>
           ))}
           <button className="add-button" onClick={handleAddLink}>+</button>
@@ -476,9 +525,12 @@ const UserProfileForm = ({ onUpdateProfile, profileData, onResetProfile }) => {
       </div>
 
       <div className="actions">
-        <button onClick={handleSave}>Save</button>
-        <button onClick={handleCancel}>Cancel</button>
-        {isSaved && (
+        {!isSaved ? (
+          <>
+            <button onClick={handleSave}>Save</button>
+            <button onClick={handleCancel}>Cancel</button>
+          </>
+        ) : (
           <div className="actions-after-save">
             <FaTrashAlt onClick={handleDeleteProfile} className="delete-icon" />
             <button onClick={() => window.location.reload()}>Return</button>
@@ -490,3 +542,4 @@ const UserProfileForm = ({ onUpdateProfile, profileData, onResetProfile }) => {
 };
 
 export default UserProfileForm;
+

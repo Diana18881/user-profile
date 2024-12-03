@@ -136,3 +136,22 @@ body {
     text-align: center;
     cursor: pointer;
   }
+  /* Добавим немного стилей для кнопки корзины */
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: red;
+  font-size: 18px;
+  margin-left: 10px;
+}
+
+.delete-button:hover {
+  opacity: 0.7;
+}
+
+.project-item, .task-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
